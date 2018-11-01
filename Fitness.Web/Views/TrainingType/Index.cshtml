@@ -1,0 +1,73 @@
+﻿@model Fitness.Models.ViewModels.ListTrainingTypesViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainingType.ImagePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainingType.Name)
+        </th>
+        <th>
+            @Html.Label("Trainer")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainingType.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.TrainingTypes) {
+    <tr>
+        <td class="text-center">
+            @{
+                if (item.ImagePath != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ImagePath);
+                    var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+
+                    <img src='@imgsrc' alt="slika" height="90px" width="auto" />
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @foreach (var trainer in Model.Trainers)
+            {
+                foreach (var trainingType in Model.TrainingTypes)
+                {
+                    if (trainer.TrainingTypeId == trainingType.TrainingTypeId && item.TrainingTypeId == trainingType.TrainingTypeId)
+                    {
+                        @Html.Raw(trainer.FullName)
+                    }
+                }
+
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == "IvoKostovski")
+    {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.TrainingTypeId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.TrainingTypeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TrainingTypeId })
+        </td>
+    }
+    </tr>
+}
+
+</table>

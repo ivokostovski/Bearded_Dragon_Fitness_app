@@ -1,0 +1,89 @@
+﻿@model Fitness.Models.ViewModels.CreateScheduleViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Days)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Trainer.TrainingType.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Trainer.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.Gyms)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Schedules) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Days)
+        </td>
+        <td>
+            @foreach (var trainer in Model.Trainers)
+            {
+                foreach (var trainingTypes in Model.TrainingTypes)
+                {
+                    if (item.TrainerId == trainer.TrainerId && trainer.TrainingTypeId == trainingTypes.TrainingTypeId)
+                    {
+                        @Html.Raw(trainingTypes.Name)
+                    }
+                    else
+                    {
+                        @Html.Raw("")
+                    }
+                }
+            }
+        </td>
+        <td>
+            @foreach (var trainer in Model.Trainers)
+            {
+                foreach (var trainingTypes in Model.TrainingTypes)
+                {
+                    if (item.TrainerId == trainer.TrainerId && trainer.TrainingTypeId == trainingTypes.TrainingTypeId)
+                    {
+                        @Html.Raw(trainer.FullName)
+                    }
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gyms)
+        </td>
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == "IvoKostovski")
+    {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.ScheduleId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.ScheduleId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.ScheduleId })
+        </td>
+    }
+    </tr>
+}
+
+</table>

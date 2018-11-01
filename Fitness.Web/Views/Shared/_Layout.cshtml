@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="m-0 p-0">
+<div class="navbar navbar-dark bg-success navbar-expand-lg">
+    <div class="container">
+        <div>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarToggler">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <img src="https://i.imgur.com/nt1jv7D.gif" width="60" height="60" alt="Logo" class="mr-1">
+            @Html.ActionLink("Fitness center - Bearded Dragon", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div id="navbarToggler" class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link active" })</li>
+                <li class="nav-item">@Html.ActionLink("Trainers", "Index", "Trainers", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Training Types", "Index", "TrainingType", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Schedules", "Index", "Schedule", null, new { @class = "nav-link" })</li>
+                <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+            </ul>
+            <ul class="navbar-nav float-lg-right">
+                @if (User.Identity.IsAuthenticated && User.Identity.Name == "IvoKostovski")
+                {
+                    <li class="nav-item text-white">Welcome @User.Identity.Name [@Html.ActionLink("Sign out", "LogOut", "Users", null, new { @class = "text-light" })]</li>
+                }
+                else
+                {
+                    <li class="nav-item"> @Html.ActionLink("Sign in", "LogIn", "Users", null, new { @class = "text-light" })</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="container body-content">
+    @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Ivo Kostovski G2 SEDC</p>
+    </footer>
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

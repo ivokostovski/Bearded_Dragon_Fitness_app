@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="jumbotron py-3 px-5">
+    <h1 class="display-4">Meet our trainers!</h1>
+    <p class="lead">Dragon Fitness is committed to helping you meet all of your fitness goals! Our personal trainers are here to help you make it happen.</p>
+    <div class="text-center"><img src="https://i.imgur.com/WM5WTzK.jpg" width="60%" height="auto" /></div>
+    <div class="mt-4">@Html.ActionLink("See more", "Index", "Trainers", null, new { @class = "btn btn-primary btn-lg" })</div>
+</div>

@@ -1,0 +1,82 @@
+﻿@using Fitness.Models
+@model IEnumerable<Fitness.Models.Trainer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortBiography)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TrainingType.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+    <tr>
+        <td class="text-center">
+            @{
+                if (item.ImagePath != null)
+                {
+                    var base64 = Convert.ToBase64String(item.ImagePath);
+                    var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+
+                    <img src='@imgsrc' alt="slika" height="90px" width="auto" />
+                }
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortBiography)
+        </td>
+        <td>
+            @foreach (var id in ViewBag.data)
+            {
+                if (item.TrainingTypeId == id.TrainingTypeId)
+                {
+                    @Html.Raw(id.Name);
+                }
+            }
+        </td>
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == "IvoKostovski")
+    {
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.TrainerId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.TrainerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TrainerId })
+        </td>
+    }
+            </tr>
+    }
+
+</table>
